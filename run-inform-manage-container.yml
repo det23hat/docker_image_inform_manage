@@ -1,0 +1,22 @@
+---
+- name: 運行container
+  hosts: localhost
+  become: true
+  tasks:
+    - name: 運行inform manage的container
+      community.docker.docker_container:
+        name: ACS
+        image: inform-manage-server:latest
+        detach: no
+        auto_remove: no
+        interactive: yes
+        privileged: no
+        tty: yes
+        ports:
+          - 5001:5001
+          - 22:22
+        volumes:
+          - /home/vagrant/manage_inform/ansible_playbook:/ansible_playbook
+          - /home/vagrant/manage_inform/docker_image/inform_manage_server/info:/info
+          - /home/vagrant/manage_inform/cpe_ssh_keys:/cpe_ssh_keys
+          - /home/vagrant/manage_inform/ansible:/etc/ansible
